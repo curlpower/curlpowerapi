@@ -9,7 +9,7 @@ At the beginning of each cohort, update the versions in
 [`package.json`](package.json) by replace all versions with a glob (`*`) and
 running `npm update --save && npm update --save-dev`. You may wish to test these
 changes by deleting the `node_modules` directory and running `npm install`.
-Fix any conflicts.
+Fix any conflicts..
 
 This template follows Rails-like conventions for organizing controller and
 model code, and has a routing layer which is similar to the Rails routing DSL.
