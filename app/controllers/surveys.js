@@ -40,7 +40,11 @@ const update = (req, res, next) => {
   delete req.body.survey._owner  // disallow owner reassignment.
 
   req.survey.update(req.body.survey)
-    .then(() => res.sendStatus(204))
+    .then((survey) =>
+    res.status(201)
+      .json({
+        survey: req.body.survey
+      }))
     .catch(next)
 }
 
