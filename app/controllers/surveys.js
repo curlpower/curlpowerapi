@@ -54,12 +54,29 @@ const destroy = (req, res, next) => {
     .catch(next)
 }
 
+const createsub = (req, res, next) => {
+  // const submission = Object.assign(req.body.submissions, {
+  //   _submitter: req.user._id
+  // })
+  // Survey.findById(req.params.id)
+  //   .then((submission) => {
+  //     console.log(res.status(201).json({ submission: req.body.submissions }))
+  //   })
+  // console.log('Hopefully something', badname)
+  // console.log('req', req.params.id)
+  // console.log('a submission ', submission)
+  // console.log('req user', req.user)
+  // console.log('req body-submission is ', req.body.submissions)
+  next()
+}
+
 module.exports = controller({
   index,
   show,
   create,
   update,
-  destroy
+  destroy,
+  createsub
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
