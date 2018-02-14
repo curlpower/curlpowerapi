@@ -2,7 +2,7 @@
 
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
-const Survey = models.survey
+const Survey = models.survey.Survey
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')

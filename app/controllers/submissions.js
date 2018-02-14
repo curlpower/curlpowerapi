@@ -2,7 +2,8 @@
 
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
-const Survey = models.survey
+const Survey = models.survey.Survey
+const Submission = models.survey.Submission
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
@@ -18,36 +19,49 @@ const index = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  console.log('req params ', req.params)
-  console.log('req submission', req.body.submissions)
   const submission = Object.assign(req.body.submissions, {
     _submitter: req.user._id
   })
-  console.log('example submission', submission)
-  // Survey.create(survey)
-  //   .then(survey =>
-  //     res.status(201)
-  //       .json({
-  //         survey: survey.toJSON({ user: req.user })
-  //       }))
-  //   .catch(next)
-  next()
+  Submission.create(submission)
+    .then(submission => {
+      Survey.findById('5a84a346d2b9bac77b9b6ff6')
+        .then(survey => {
+          survey.submissions.push(submission)
+          survey.save()
+          return submission
+        })
+        .then(submission =>
+          res.status(201)
+            .json({
+              submission: submission.toJSON({ user: req.user })
+            })
+          )
+        .catch(next)
+    })
+    .catch(next)
 }
 
 const update = (req, res, next) => {
-  console.log('req params ', req.params)
-  console.log('req submission', req.body.submissions)
+  // console.log('req params ', req.params)
+  // console.log('req submission', req.body.submissions)
   const submission = Object.assign(req.body.submissions, {
     _submitter: req.user._id
   })
 
-  Survey.findById(req.params.id)
+  Survey.findById('5a84a346d2b9bac77b9b6ff6')
     .then(survey => {
       survey.submissions.push(submission)
+      // console.log(survey)
+      return survey
+    })
+    .then(survey => {
+      survey.update(survey.submissions)
       console.log(survey)
     })
-  // console.log('thingy', thingy)
+    .catch(console.error)
   next()
+  // console.log('thingy', thingy)
+
   // delete req.body.survey._owner  // disallow owner reassignment.
 
   // req.survey.update(req.body.survey)
