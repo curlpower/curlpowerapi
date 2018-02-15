@@ -3,15 +3,13 @@
 API="http://localhost:4741"
 URL_PATH="/submissions"
 
-curl "${API}${URL_PATH}/${ID}" \
+curl "${API}${URL_PATH}" \
   --include \
-  --request PATCH \
+  --request GET \
   --header "Content-Type: application/json" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
-    "submissions": {
-      "answer": "'"${ANSWER}"'"
-    }
+    "surveyid": "'"${SURVID}"'"
   }'
 
 echo
