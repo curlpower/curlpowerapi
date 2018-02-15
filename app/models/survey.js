@@ -50,5 +50,9 @@ const surveySchema = new mongoose.Schema({
 })
 
 const Survey = mongoose.model('Survey', surveySchema)
+const Submission = mongoose.model('Submission', submissionSchema)
 
-module.exports = Survey
+module.exports = {
+  Survey,
+  Submission
+}
