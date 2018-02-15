@@ -24,7 +24,7 @@ const create = (req, res, next) => {
   })
   Submission.create(submission)
     .then(submission => {
-      Survey.findById('5a84a346d2b9bac77b9b6ff6')
+      Survey.findById(req.body.surveyid)
         .then(survey => {
           survey.submissions.push(submission)
           survey.save()
@@ -41,42 +41,43 @@ const create = (req, res, next) => {
     .catch(next)
 }
 
-const update = (req, res, next) => {
-  // console.log('req params ', req.params)
-  // console.log('req submission', req.body.submissions)
-  const submission = Object.assign(req.body.submissions, {
-    _submitter: req.user._id
-  })
-
-  Survey.findById('5a84a346d2b9bac77b9b6ff6')
-    .then(survey => {
-      survey.submissions.push(submission)
-      // console.log(survey)
-      return survey
-    })
-    .then(survey => {
-      survey.update(survey.submissions)
-      console.log(survey)
-    })
-    .catch(console.error)
-  next()
-  // console.log('thingy', thingy)
-
-  // delete req.body.survey._owner  // disallow owner reassignment.
-
-  // req.survey.update(req.body.survey)
-  //   .then((survey) =>
-  //   res.status(201)
-  //     .json({
-  //       survey: req.body.survey
-  //     }))
-  //   .catch(next)
-}
+// const update = (req, res, next) => {
+//   // console.log('req params ', req.params)
+//   // console.log('req submission', req.body.submissions)
+//   const submission = Object.assign(req.body.submissions, {
+//     _submitter: req.user._id
+//   })
+//   console.log('req body', req.body)
+//   console.log('submission', submission)
+//   Survey.findById(req.body.surveyid)
+//     .then(survey => {
+//       survey.submissions.push(submission)
+//       // console.log(survey)
+//       return survey
+//     })
+//     .then(survey => {
+//       survey.update(survey.submissions)
+//       console.log(survey)
+//     })
+//     .catch(console.error)
+//   next()
+//   // console.log('thingy', thingy)
+//
+//   // delete req.body.survey._owner  // disallow owner reassignment.
+//
+//   // req.survey.update(req.body.survey)
+//   //   .then((survey) =>
+//   //   res.status(201)
+//   //     .json({
+//   //       survey: req.body.survey
+//   //     }))
+//   //   .catch(next)
+// }
 
 module.exports = controller({
   index,
-  create,
-  update
+  create
+  // update
 }, { before: [
   { method: setUser, only: ['index'] },
   { method: authenticate, except: ['index'] },

@@ -11,7 +11,8 @@ curl "${API}${URL_PATH}" \
   --data '{
     "submissions": {
       "answer": "'"${ANSWER}"'"
-    }
+    },
+    "surveyid": "'"${SURVID}"'"
   }'
 
 echo
