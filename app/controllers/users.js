@@ -46,16 +46,21 @@ const makeErrorHandler = (res, next) =>
 
 const signup = (req, res, next) => {
   const credentials = req.body.credentials
-  const user = { email: credentials.email, password: credentials.password }
+  console.log(credentials)
+  const user = { email: credentials.email, password: credentials.password, password_confirmation: credentials.password_confirmation }
   getToken()
     .then(token => {
       user.token = token
     })
-    .then(() =>
-      new User(user).save())
+    .then(() => {
+      if (user.password !== user.password_confirmation) {
+        throw res.status(400)
+      }
+      new User(user).save()
+    })
     .then(user =>
       res.status(201).json({ user }))
-    .catch(makeErrorHandler(res, next))
+      .catch(makeErrorHandler(res, next))
 }
 
 const signin = (req, res, next) => {
@@ -107,6 +112,7 @@ const changepw = (req, res, next) => {
     res.sendStatus(204)
   ).catch(makeErrorHandler(res, next))
 }
+
 
 module.exports = controller({
   index,
