@@ -2,7 +2,7 @@
 
 This is the back-end api for our survey app. This is how our front end interacts with out database to complete several actions including all user authentications. It allows our app to build new surveys as well as show surveys already built to other users. The app allows users to create surveys and take other users surveys.
 
-We used express.js to build the back end portion of the project.
+We used express.js, mongoose, mongodb and javascript to build the back end portion of the project.
 
 One of the unsolved problems we would like to revisit later would be to try and allow for any kind of submission. Allow the user to make a survey with any kind of input for the response to the survey.
 
